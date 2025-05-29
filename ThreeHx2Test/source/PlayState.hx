@@ -2,7 +2,9 @@ package;
 
 import flixel.FlxState;
 import flixel.text.FlxText;
-import vman2002.vthreehx.core.Object3D;
+import vman2002.vthreehx.scenes.Scene;
+import vman2002.vthreehx.cameras.PerspectiveCamera;
+import flixel.FlxG;
 
 class PlayState extends FlxState {
 	//var cube;
@@ -11,16 +13,15 @@ class PlayState extends FlxState {
 	override public function create() {
 		super.create();
 
-		var o3d = new Object3D();
-		//var scene = new Scene();
-		/*var camera = new PerspectiveCamera(75, FlxG.width / FlxG.height, 0.1, 1000);
+		var scene = new Scene();
+		var camera = new PerspectiveCamera(75, FlxG.width / FlxG.height, 0.1, 1000);
 
-		var renderer = new WebGLRenderer();
+		/*var renderer = new WebGLRenderer();
 		renderer.setSize(FlxG.width, FlxG.height);
-		add(renderer.flixelSprite());
+		add(renderer.createFlxViewSprite(scene, camera));*/
 
-		var geometry = new BoxGeometry(1, 1, 1);
-		var material = new MeshBasicMaterial({color: 0x00ff00});
+		//var geometry = new BoxGeometry(1, 1, 1);
+		/*var material = new MeshBasicMaterial({color: 0x00ff00});
 		cube = new Mesh(geometry, material);
 		scene.add(cube);
 		camera.position.z = 5;*/
