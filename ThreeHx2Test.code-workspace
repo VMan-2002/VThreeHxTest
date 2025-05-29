@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "ThreeHx2Test"
+		},
+		{
+			"path": "../ThreeHx2/com"
+		}
+	],
+	"settings": {
+		"haxe.enableExtendedIndentation": true
+	}
+}
