@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "ThreeHx2Test"
+			"path": "../ThreeHx2"
 		},
 		{
-			"path": "../ThreeHx2/vman2002"
+			"path": "."
 		}
 	],
 	"settings": {
