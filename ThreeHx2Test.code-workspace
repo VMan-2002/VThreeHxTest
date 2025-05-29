@@ -1,12 +1,12 @@
 {
 	"folders": [
 		{
-			"name": "ThreeHx2Test",
-			"path": "."
-		},
-		{
 			"name": "ThreeHx2",
 			"path": "../ThreeHx2"
+		},
+		{
+			"name": "ThreeHx2Test",
+			"path": "."
 		}
 	],
 	"settings": {
