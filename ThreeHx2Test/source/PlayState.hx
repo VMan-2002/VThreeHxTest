@@ -1,15 +1,18 @@
 package;
 
 import flixel.FlxState;
+import flixel.text.FlxText;
+import vman2002.vthreehx.core.Object3D;
 
 class PlayState extends FlxState {
-	var cube;
+	//var cube;
 	var text:FlxText;
 	
 	override public function create() {
 		super.create();
 
-		var scene = new Scene();
+		var o3d = new Object3D();
+		//var scene = new Scene();
 		/*var camera = new PerspectiveCamera(75, FlxG.width / FlxG.height, 0.1, 1000);
 
 		var renderer = new WebGLRenderer();
