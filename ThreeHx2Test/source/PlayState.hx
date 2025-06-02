@@ -6,9 +6,11 @@ import vman2002.vthreehx.scenes.Scene;
 import vman2002.vthreehx.cameras.PerspectiveCamera;
 import flixel.FlxG;
 import vman2002.vthreehx.geometries.BoxGeometry;
+import vman2002.vthreehx.materials.MeshBasicMaterial;
+import vman2002.vthreehx.objects.Mesh;
 
 class PlayState extends FlxState {
-	//var cube;
+	var cube:Mesh;
 	var text:FlxText;
 	
 	override public function create() {
@@ -22,9 +24,9 @@ class PlayState extends FlxState {
 		add(renderer.createFlxViewSprite(scene, camera));*/
 
 		var geometry = new BoxGeometry(1, 1, 1);
-		/*var material = new MeshBasicMaterial({color: 0x00ff00});
+		var material = new MeshBasicMaterial({color: 0x00ff00});
 		cube = new Mesh(geometry, material);
-		scene.add(cube);*/
+		scene.add(cube);
 		camera.position.z = 5;
 
 		add(text = new FlxText(0, 0, 0, "It works"));
