@@ -1,6 +1,10 @@
 {
 	"folders": [
 		{
+			"name": "src",
+			"path": "../ThreeHx2/src"
+		},
+		{
 			"name": "ThreeHx2",
 			"path": "../ThreeHx2"
 		},
