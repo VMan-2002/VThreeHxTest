@@ -8,6 +8,7 @@ import flixel.FlxG;
 import vman2002.vthreehx.geometries.BoxGeometry;
 import vman2002.vthreehx.materials.MeshBasicMaterial;
 import vman2002.vthreehx.objects.Mesh;
+import vman2002.vthreehx.renderers.WebGLRenderer;
 
 class PlayState extends FlxState {
 	var cube:Mesh;
@@ -19,9 +20,9 @@ class PlayState extends FlxState {
 		var scene = new Scene();
 		var camera = new PerspectiveCamera(75, FlxG.width / FlxG.height, 0.1, 1000);
 
-		/*var renderer = new WebGLRenderer();
+		var renderer = new WebGLRenderer();
 		renderer.setSize(FlxG.width, FlxG.height);
-		add(renderer.createFlxViewSprite(scene, camera));*/
+		//add(renderer.createFlxViewSprite(scene, camera));
 
 		var geometry = new BoxGeometry(1, 1, 1);
 		var material = new MeshBasicMaterial({color: 0x00ff00});
