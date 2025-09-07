@@ -8,9 +8,11 @@ Based on ThreeJs version [r176](https://github.com/mrdoob/three.js/tree/r176)
 
 ## Use
 
-While in the folder containing `haxelib.json`: `haxelib dev vthreehx ./`
+~~While in the folder containing `haxelib.json`: `haxelib dev vthreehx ./`~~
 
-Then, you can use it as you would any other haxelib.
+~~Then, you can use it as you would any other haxelib.~~
+
+The above does not work somehow. However, since it is not functional enough, we don't need that yet.
 
 ## Progress
 
