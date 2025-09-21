@@ -2,32 +2,38 @@ package vman2002.vthreehx.renderers;
 
 //goodluck
 
-import vman2002.vthreehx.materials.MeshBasicMaterial;
-import vman2002.vthreehx.Constants.REVISION;
 import vman2002.vthreehx.Constants.BackSide;
-import vman2002.vthreehx.Constants.FrontSide;
 import vman2002.vthreehx.Constants.DoubleSide;
+import vman2002.vthreehx.Constants.FrontSide;
 import vman2002.vthreehx.Constants.HalfFloatType;
-import vman2002.vthreehx.Constants.UnsignedByteType;
-import vman2002.vthreehx.Constants.NoToneMapping;
 import vman2002.vthreehx.Constants.LinearMipmapLinearFilter;
-import vman2002.vthreehx.Constants.SRGBColorSpace;
 import vman2002.vthreehx.Constants.LinearSRGBColorSpace;
+import vman2002.vthreehx.Constants.NoToneMapping;
+import vman2002.vthreehx.Constants.REVISION;
 import vman2002.vthreehx.Constants.RGBAIntegerFormat;
 import vman2002.vthreehx.Constants.RGIntegerFormat;
 import vman2002.vthreehx.Constants.RedIntegerFormat;
-import vman2002.vthreehx.Constants.UnsignedIntType;
-import vman2002.vthreehx.Constants.UnsignedShortType;
+import vman2002.vthreehx.Constants.SRGBColorSpace;
+import vman2002.vthreehx.Constants.UnsignedByteType;
 import vman2002.vthreehx.Constants.UnsignedInt248Type;
+import vman2002.vthreehx.Constants.UnsignedIntType;
 import vman2002.vthreehx.Constants.UnsignedShort4444Type;
 import vman2002.vthreehx.Constants.UnsignedShort5551Type;
+import vman2002.vthreehx.Constants.UnsignedShortType;
 import vman2002.vthreehx.Constants.WebGLCoordinateSystem;
+import vman2002.vthreehx.Utils.toNormalizedProjectionMatix;
+import vman2002.vthreehx.Utils.toReversedProjectionMatrix;
+import vman2002.vthreehx.Utils.warnOnce;
+import vman2002.vthreehx.core.Object3D;
+import vman2002.vthreehx.materials.MeshBasicMaterial;
+import vman2002.vthreehx.materials.MeshStandardMaterial;
 import vman2002.vthreehx.math.Color;
+import vman2002.vthreehx.math.ColorManagement;
+import vman2002.vthreehx.math.Frustum;
 import vman2002.vthreehx.math.Matrix4;
 import vman2002.vthreehx.math.Vector3;
 import vman2002.vthreehx.math.Vector4;
-import vman2002.vthreehx.math.ColorManagement;
-import vman2002.vthreehx.math.Frustum;
+import vman2002.vthreehx.renderers.WebGLRenderTarget;
 import vman2002.vthreehx.renderers.webgl.WebGLAnimation;
 import vman2002.vthreehx.renderers.webgl.WebGLAttributes;
 import vman2002.vthreehx.renderers.webgl.WebGLBackground;
@@ -41,28 +47,23 @@ import vman2002.vthreehx.renderers.webgl.WebGLExtensions;
 import vman2002.vthreehx.renderers.webgl.WebGLGeometries;
 import vman2002.vthreehx.renderers.webgl.WebGLIndexedBufferRenderer;
 import vman2002.vthreehx.renderers.webgl.WebGLInfo;
+import vman2002.vthreehx.renderers.webgl.WebGLMaterials;
 import vman2002.vthreehx.renderers.webgl.WebGLMorphtargets;
 import vman2002.vthreehx.renderers.webgl.WebGLObjects;
 import vman2002.vthreehx.renderers.webgl.WebGLPrograms;
 import vman2002.vthreehx.renderers.webgl.WebGLProperties;
 import vman2002.vthreehx.renderers.webgl.WebGLRenderLists;
 import vman2002.vthreehx.renderers.webgl.WebGLRenderStates;
-import vman2002.vthreehx.renderers.webgl.WebGLRenderTarget;
 import vman2002.vthreehx.renderers.webgl.WebGLShadowMap;
 import vman2002.vthreehx.renderers.webgl.WebGLState;
 import vman2002.vthreehx.renderers.webgl.WebGLTextures;
 import vman2002.vthreehx.renderers.webgl.WebGLUniforms;
-import vman2002.vthreehx.renderers.webgl.WebGLUtils;
-//TODO: WebXRManager
-//import vman2002.vthreehx.renderers.webxr.WebXRManager;
-import vman2002.vthreehx.renderers.webgl.WebGLMaterials;
 import vman2002.vthreehx.renderers.webgl.WebGLUniformsGroups;
-import vman2002.vthreehx.Utils.warnOnce;
-import vman2002.vthreehx.Utils.toNormalizedProjectionMatix;
-import vman2002.vthreehx.Utils.toReversedProjectionMatrix;
-//import { createCanvasElement, probeAsync, } from '../utils.js';
-import vman2002.vthreehx.materials.MeshStandardMaterial;
-import vman2002.vthreehx.core.Object3D;
+import vman2002.vthreehx.renderers.webgl.WebGLUtils;
+
+// import vman2002.vthreehx.renderers.webxr.WebXRManager;
+// import { createCanvasElement, probeAsync, } from '../utils.js';
+//TODO: WebXRManager
 
 /**
  * This renderer uses WebGL 2 to display scenes.
