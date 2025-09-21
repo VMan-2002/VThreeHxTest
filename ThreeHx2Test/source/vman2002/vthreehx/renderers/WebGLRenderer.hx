@@ -62,6 +62,8 @@ import vman2002.vthreehx.renderers.webgl.WebGLUniformsGroups;
 import vman2002.vthreehx.renderers.webgl.WebGLUtils;
 import vman2002.vthreehx.cameras.Camera;
 import vman2002.vthreehx.scenes.Scene;
+import vman2002.vthreehx.core.BufferGeometry;
+import vman2002.vthreehx.materials.Material;
 
 // import vman2002.vthreehx.renderers.webxr.WebXRManager;
 // import { createCanvasElement, probeAsync, } from '../utils.js';

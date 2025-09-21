@@ -9,12 +9,10 @@ import sys.io.File;
 import vman2002.vthreehx.renderers.shaders.ShaderChunk;
 import vman2002.vthreehx.renderers.shaders.ShaderLib;
 
-@:allow(ShaderChunk)
-@:allow(ShaderLib)
 /**
     Macro used to generate fields in `ShaderChunk` and `ShaderLib`
 **/
-private class ShaderSetBuilder {
+class ShaderSetBuilder {
     /**
         autogenerate fields lol
     **/
