@@ -16,7 +16,24 @@ import vman2002.vthreehx.renderers.shaders.ShaderLib;
 import vman2002.vthreehx.renderers.shaders.UniformsUtils.cloneUniforms;
 import vman2002.vthreehx.renderers.shaders.UniformsUtils.getUnlitUniformColorSpace;
 
-function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha, premultipliedAlpha ) {
+class WebGLBackground {
+
+    public function new(renderer, cubemaps, cubeuvmaps, state, objects, alpha, premultipliedAlpha) {
+        this.renderer = renderer;
+        this.cubemaps = cubemaps;
+        this.cubeuvmaps = cubeuvmaps;
+        this.state = state;
+        this.objects = objects;
+        this.alpha = alpha;
+        this.premultipliedAlpha = premultipliedAlpha;
+    }
+    var renderer:WebGLRenderer;
+    var cubemaps:WebGLCubeMaps;
+    var cubeuvmaps:WebGLCubeUVMaps;
+    var state:WebGLState;
+    var objects:WebGLObjects;
+    var alpha:Float;
+    var premultipliedAlpha:Float;
 
 	var clearColor = new Color( 0x000000 );
 	var clearAlpha = alpha == true ? 0 : 1;
@@ -28,7 +45,7 @@ function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha,
 	var currentBackgroundVersion = 0;
 	var currentTonemapping = null;
 
-	function getBackground( scene ) {
+	public function getBackground( scene ) {
 
 		var background = scene.isScene == true ? scene.background : null;
 
@@ -43,7 +60,7 @@ function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha,
 
 	}
 
-	function render( scene ) {
+	public function render( scene ) {
 
 		var forceClear = false;
 		var background = getBackground( scene );
@@ -85,7 +102,7 @@ function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha,
 
 	}
 
-	function addToRenderList( renderList, scene ) {
+	public function addToRenderList( renderList, scene ) {
 
 		var background = getBackground( scene );
 
@@ -238,7 +255,7 @@ function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha,
 
 	}
 
-	function setClear( color, alpha ) {
+	public function setClear( color, alpha ) {
 
 		color.getRGB( _rgb, getUnlitUniformColorSpace( renderer ) );
 
@@ -246,7 +263,7 @@ function WebGLBackground( renderer, cubemaps, cubeuvmaps, state, objects, alpha,
 
 	}
 
-	function dispose() {
+	public function dispose() {
 
 		if ( boxMesh != null ) {
 
