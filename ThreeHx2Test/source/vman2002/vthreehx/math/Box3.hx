@@ -2,6 +2,7 @@ package vman2002.vthreehx.math;
 
 import vman2002.vthreehx.math.Vector3;
 import vman2002.vthreehx.core.Object3D;
+import vman2002.vthreehx.objects.Mesh;
 
 /**
  * Represents an axis-aligned bounding box (AABB) in 3D space.

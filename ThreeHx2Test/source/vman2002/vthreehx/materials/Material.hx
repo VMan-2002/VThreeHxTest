@@ -880,7 +880,7 @@ class Material extends EventDispatcher implements GetType {
 	 * @param {Material} source - The material to copy.
 	 * @return {Material} A reference to this instance.
 	 */
-	public function copy( source:Dynamic ) {
+	public function copy( source:Dynamic ):Dynamic {
 
 		this.name = source.name;
 
