@@ -1,39 +1,40 @@
 package vman2002.vthreehx.renderers.webgl;
 
-import vman2002.vthreehx.math.Vector2;
-import vman2002.vthreehx.Utils;
-import vman2002.vthreehx.math.ColorManagement;
+import vman2002.vthreehx.Constants.AlwaysCompare;
+import vman2002.vthreehx.Constants.ClampToEdgeWrapping;
+import vman2002.vthreehx.Constants.DepthFormat;
+import vman2002.vthreehx.Constants.DepthStencilFormat;
+import vman2002.vthreehx.Constants.EqualCompare;
+import vman2002.vthreehx.Constants.FloatType;
+import vman2002.vthreehx.Constants.GreaterCompare;
+import vman2002.vthreehx.Constants.GreaterEqualCompare;
+import vman2002.vthreehx.Constants.LessCompare;
+import vman2002.vthreehx.Constants.LessEqualCompare;
 import vman2002.vthreehx.Constants.LinearFilter;
 import vman2002.vthreehx.Constants.LinearMipmapLinearFilter;
 import vman2002.vthreehx.Constants.LinearMipmapNearestFilter;
+import vman2002.vthreehx.Constants.LinearSRGBColorSpace;
+import vman2002.vthreehx.Constants.LinearTransfer;
+import vman2002.vthreehx.Constants.MirroredRepeatWrapping;
 import vman2002.vthreehx.Constants.NearestFilter;
 import vman2002.vthreehx.Constants.NearestMipmapLinearFilter;
 import vman2002.vthreehx.Constants.NearestMipmapNearestFilter;
-import vman2002.vthreehx.Constants.RGBAFormat;
-import vman2002.vthreehx.Constants.DepthFormat;
-import vman2002.vthreehx.Constants.DepthStencilFormat;
-import vman2002.vthreehx.Constants.UnsignedIntType;
-import vman2002.vthreehx.Constants.FloatType;
-import vman2002.vthreehx.Constants.MirroredRepeatWrapping;
-import vman2002.vthreehx.Constants.ClampToEdgeWrapping;
-import vman2002.vthreehx.Constants.RepeatWrapping;
-import vman2002.vthreehx.Constants.UnsignedByteType;
-import vman2002.vthreehx.Constants.NoColorSpace;
-import vman2002.vthreehx.Constants.LinearSRGBColorSpace;
 import vman2002.vthreehx.Constants.NeverCompare;
-import vman2002.vthreehx.Constants.AlwaysCompare;
-import vman2002.vthreehx.Constants.LessCompare;
-import vman2002.vthreehx.Constants.LessEqualCompare;
-import vman2002.vthreehx.Constants.EqualCompare;
-import vman2002.vthreehx.Constants.GreaterEqualCompare;
-import vman2002.vthreehx.Constants.GreaterCompare;
+import vman2002.vthreehx.Constants.NoColorSpace;
 import vman2002.vthreehx.Constants.NotEqualCompare;
+import vman2002.vthreehx.Constants.RGBAFormat;
+import vman2002.vthreehx.Constants.RepeatWrapping;
 import vman2002.vthreehx.Constants.SRGBTransfer;
-import vman2002.vthreehx.Constants.LinearTransfer;
-import vman2002.vthreehx.Constants.UnsignedShortType;
+import vman2002.vthreehx.Constants.UnsignedByteType;
 import vman2002.vthreehx.Constants.UnsignedInt248Type;
-//import { createElementNS } from '../../utils.js';
+import vman2002.vthreehx.Constants.UnsignedIntType;
+import vman2002.vthreehx.Constants.UnsignedShortType;
+import vman2002.vthreehx.Utils;
 import vman2002.vthreehx.extras.TextureUtils.getByteLength;
+import vman2002.vthreehx.math.ColorManagement;
+import vman2002.vthreehx.math.Vector2;
+
+// import { createElementNS } from '../../utils.js';
 
 class WebGLTextures {
 
@@ -72,7 +73,8 @@ class WebGLTextures {
 
 	var _imageDimensions = new Vector2();
 	var _videoTextures = new WeakMap();
-	var _canvas;
+	//TODO: better type for this
+	var _canvas:Dynamic;
 
 	var _sources = new WeakMap(); // maps WebglTexture objects to instances of Source
 

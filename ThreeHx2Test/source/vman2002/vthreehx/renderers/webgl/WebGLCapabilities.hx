@@ -22,7 +22,7 @@ class WebGLCapabilities {
         }
     }
 
-	var maxAnisotropy;
+	var maxAnisotropy:Int;
 
 	function getMaxAnisotropy() {
 

@@ -210,3 +210,16 @@ abstract CommonIntArray(Int32Array) from Uint32Array from Uint16Array from Uint8
 abstract CommonArray(Float32Array) from Float32Array from Float16Array to Float32Array to Float16Array  from Uint32Array from Uint16Array from Uint8Array from Int32Array from Int16Array from Int8Array to Uint32Array to Uint16Array to Uint8Array to Int32Array to Int16Array to Int8Array {
     
 }*/
+
+class CustomIterator extends IntIterator {
+    public var step:Int;
+
+    public function new(min:Int, max:Int, ?step:Int = 1) {
+        super(min, max);
+        this.step = step;
+    }
+
+    public override function next() {
+        min += step;
+    }
+}
