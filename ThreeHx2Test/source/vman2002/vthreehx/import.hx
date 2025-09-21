@@ -27,3 +27,4 @@ import vman2002.vthreehx.interfaces.ToJson;
 import vman2002.vthreehx.interfaces.GetType;
 
 import vman2002.vthreehx.Common.CustomIterator;
+import vman2002.vthreehx.Common.Uniforms;

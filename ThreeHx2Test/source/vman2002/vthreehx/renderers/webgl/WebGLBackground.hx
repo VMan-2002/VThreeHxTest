@@ -38,8 +38,8 @@ class WebGLBackground {
 	var clearColor = new Color( 0x000000 );
 	var clearAlpha = alpha == true ? 0 : 1;
 
-	var planeMesh;
-	var boxMesh;
+	var planeMesh:Mesh;
+	var boxMesh:Mesh;
 
 	var currentBackground = null;
 	var currentBackgroundVersion = 0;

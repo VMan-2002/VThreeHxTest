@@ -4,6 +4,7 @@ import vman2002.vthreehx.Constants.WebGLCoordinateSystem;
 import vman2002.vthreehx.Constants.WebGPUCoordinateSystem;
 import vman2002.vthreehx.cameras.PerspectiveCamera;
 import vman2002.vthreehx.core.Object3D;
+import vman2002.vthreehx.renderers.WebGLRenderTarget;
 
 /**
  * A special type of camera that is positioned in 3D space to render its surroundings into a

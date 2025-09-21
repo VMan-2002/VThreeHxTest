@@ -2,7 +2,7 @@ package vman2002.vthreehx.renderers.webgl;
 
 import vman2002.vthreehx.Constants.CubeReflectionMapping;
 import vman2002.vthreehx.Constants.CubeRefractionMapping;
-import vman2002.vthreehx.Constants.CubeReflectionMapEquirectangularReflectionMappingping;
+import vman2002.vthreehx.Constants.EquirectangularReflectionMapping;
 import vman2002.vthreehx.Constants.EquirectangularRefractionMapping;
 import vman2002.vthreehx.extras.PMREMGenerator;
 

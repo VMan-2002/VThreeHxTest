@@ -16,10 +16,10 @@ class WebGLAttributes {
 		var usage = attribute.usage;
 		var size = array.byteLength;
 
-		var buffer = gl.createBuffer();
+		var buffer = GL.createBuffer();
 
-		gl.bindBuffer( bufferType, buffer );
-		gl.bufferData( bufferType, array, usage );
+		GL.bindBuffer( bufferType, buffer );
+		GL.bufferData( bufferType, array, usage );
 
 		attribute.onUploadCallback();
 
@@ -27,43 +27,43 @@ class WebGLAttributes {
 
 		if ( Std.isOfType(array, Float32Array) ) {
 
-			type = gl.FLOAT;
+			type = GL.FLOAT;
 
 		} else if ( Std.isOfType(array, Uint16Array) ) {
 
 			if ( attribute.isFloat16BufferAttribute ) {
 
-				type = gl.HALF_FLOAT;
+				type = GL.HALF_FLOAT;
 
 			} else {
 
-				type = gl.UNSIGNED_SHORT;
+				type = GL.UNSIGNED_SHORT;
 
 			}
 
 		} else if ( Std.isOfType(array, Int16Array) ) {
 
-			type = gl.SHORT;
+			type = GL.SHORT;
 
 		} else if ( Std.isOfType(array, Uint32Array) ) {
 
-			type = gl.UNSIGNED_INT;
+			type = GL.UNSIGNED_INT;
 
 		} else if ( Std.isOfType(array, Int32Array) ) {
 
-			type = gl.INT;
+			type = GL.INT;
 
 		} else if ( Std.isOfType(array, Int8Array) ) {
 
-			type = gl.BYTE;
+			type = GL.BYTE;
 
 		} else if ( Std.isOfType(array, Uint8Array) ) {
 
-			type = gl.UNSIGNED_BYTE;
+			type = GL.UNSIGNED_BYTE;
 
 		} else if ( Std.isOfType(array, Uint8ClampedArray) ) {
 
-			type = gl.UNSIGNED_BYTE;
+			type = GL.UNSIGNED_BYTE;
 
 		} else {
 
@@ -86,12 +86,12 @@ class WebGLAttributes {
 		var array = attribute.array;
 		var updateRanges = attribute.updateRanges;
 
-		gl.bindBuffer( bufferType, buffer );
+		GL.bindBuffer( bufferType, buffer );
 
 		if ( updateRanges.length == 0 ) {
 
 			// Not using update ranges
-			gl.bufferSubData( bufferType, 0, array );
+			GL.bufferSubData( bufferType, 0, array );
 
 		} else {
 
@@ -137,13 +137,13 @@ class WebGLAttributes {
 			}
 
 			// Trim the array to only contain the merged ranges.
-			updateRanges.length = mergeIndex + 1;
+			updateRanges.resize(mergeIndex + 1);
 
 			for ( i in 0...updateRanges.length ) {
 
 				var range = updateRanges[ i ];
 
-				gl.bufferSubData( bufferType, range.start * array.BYTES_PER_ELEMENT,
+				GL.bufferSubData( bufferType, range.start * array.BYTES_PER_ELEMENT,
 					array, range.start, range.count );
 
 			}
@@ -174,7 +174,7 @@ class WebGLAttributes {
 
 		if ( data ) {
 
-			gl.deleteBuffer( data.buffer );
+			GL.deleteBuffer( data.buffer );
 
 			buffers.remove( attribute );
 

@@ -11,7 +11,7 @@ class WebGLIndexedBufferRenderer {
     var extensions:WebGLExtensions;
     var info:WebGLInfo;
 
-	var mode;
+	var mode:Dynamic;
 
 	public function setMode( value ) {
 

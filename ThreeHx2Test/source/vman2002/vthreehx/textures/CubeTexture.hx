@@ -52,7 +52,7 @@ class CubeTexture extends Texture {
 
 	}
 
-    public var images(get, set):Array<Image>;
+    public var images(get, set):Array<Dynamic>;
 
 	/**
 	 * Alias for {@link CubeTexture#image}.

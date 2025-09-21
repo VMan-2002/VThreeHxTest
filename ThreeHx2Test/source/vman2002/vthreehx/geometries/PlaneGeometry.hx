@@ -29,8 +29,6 @@ class PlaneGeometry extends BufferGeometry {
 
 		super();
 
-		this.type = 'PlaneGeometry';
-
 		/**
 		 * Holds the constructor parameters that have been
 		 * used to generate the geometry. Any modification
@@ -72,9 +70,13 @@ class PlaneGeometry extends BufferGeometry {
 
 				var x = ix * segment_width - width_half;
 
-				vertices.push( x, - y, 0 );
+				vertices.push( x);
+				vertices.push( -y);
+				vertices.push( 0 );
 
-				normals.push( 0, 0, 1 );
+				normals.push( 0 );
+				normals.push( 0 );
+				normals.push( 1 );
 
 				uvs.push( ix / gridX );
 				uvs.push( 1 - ( iy / gridY ) );
@@ -92,8 +94,12 @@ class PlaneGeometry extends BufferGeometry {
 				var c = ( ix + 1 ) + gridX1 * ( iy + 1 );
 				var d = ( ix + 1 ) + gridX1 * iy;
 
-				indices.push( a, b, d );
-				indices.push( b, c, d );
+				indices.push( a );
+				indices.push( b );
+				indices.push( d );
+				indices.push( b );
+				indices.push( c );
+				indices.push( d );
 
 			}
 
@@ -106,11 +112,11 @@ class PlaneGeometry extends BufferGeometry {
 
 	}
 
-	public function copy( source ) {
+	public override function copy( source ) {
 
 		super.copy( source );
 
-		this.parameters = Object.assign( {}, source.parameters );
+		this.parameters = Common.assign( {}, source.parameters );
 
 		return this;
 

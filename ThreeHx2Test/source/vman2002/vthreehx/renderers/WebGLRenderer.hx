@@ -21,7 +21,7 @@ import vman2002.vthreehx.Constants.UnsignedShort4444Type;
 import vman2002.vthreehx.Constants.UnsignedShort5551Type;
 import vman2002.vthreehx.Constants.UnsignedShortType;
 import vman2002.vthreehx.Constants.WebGLCoordinateSystem;
-import vman2002.vthreehx.Utils.toNormalizedProjectionMatix;
+import vman2002.vthreehx.Utils.toNormalizedProjectionMatrix;
 import vman2002.vthreehx.Utils.toReversedProjectionMatrix;
 import vman2002.vthreehx.Utils.warnOnce;
 import vman2002.vthreehx.core.Object3D;
@@ -60,6 +60,8 @@ import vman2002.vthreehx.renderers.webgl.WebGLTextures;
 import vman2002.vthreehx.renderers.webgl.WebGLUniforms;
 import vman2002.vthreehx.renderers.webgl.WebGLUniformsGroups;
 import vman2002.vthreehx.renderers.webgl.WebGLUtils;
+import vman2002.vthreehx.cameras.Camera;
+import vman2002.vthreehx.scenes.Scene;
 
 // import vman2002.vthreehx.renderers.webxr.WebXRManager;
 // import { createCanvasElement, probeAsync, } from '../utils.js';

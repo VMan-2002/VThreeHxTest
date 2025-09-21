@@ -5,6 +5,336 @@ import vman2002.vthreehx.math.Color;
 import vman2002.vthreehx.math.Vector4;
 import lime.graphics.opengl.GLTexture;
 
+class ColorBuffer {
+
+	public function new() {}
+
+	var locked = false;
+
+	var color = new Vector4();
+	var currentColorMask = null;
+	var currentColorClear = new Vector4( 0, 0, 0, 0 );
+
+
+	public function setMask ( colorMask ) {
+
+		if ( currentColorMask != colorMask && ! locked ) {
+
+			gl.colorMask( colorMask, colorMask, colorMask, colorMask );
+			currentColorMask = colorMask;
+
+		}
+
+	}
+
+	public function setLocked ( lock ) {
+
+		locked = lock;
+
+	}
+
+	public function setClear ( r, g, b, a, premultipliedAlpha ) {
+
+		if ( premultipliedAlpha == true ) {
+
+			r *= a; g *= a; b *= a;
+
+		}
+
+		color.set( r, g, b, a );
+
+		if ( currentColorClear.equals( color ) == false ) {
+
+			gl.clearColor( r, g, b, a );
+			currentColorClear.copy( color );
+
+		}
+
+	}
+
+	public function reset () {
+
+		locked = false;
+
+		currentColorMask = null;
+		currentColorClear.set( - 1, 0, 0, 0 ); // set to invalid state
+
+	}
+
+}
+
+class DepthBuffer {
+	public function new() {}
+
+	var locked = false;
+
+	var currentReversed = false;
+	var currentDepthMask = null;
+	var currentDepthFunc = null;
+	var currentDepthClear = null;
+
+	public function setReversed ( reversed ) {
+
+		if ( currentReversed != reversed ) {
+
+			var ext = extensions.get( 'EXT_clip_control' );
+
+			if ( reversed ) {
+
+				ext.clipControlEXT( ext.LOWER_LEFT_EXT, ext.ZERO_TO_ONE_EXT );
+
+			} else {
+
+				ext.clipControlEXT( ext.LOWER_LEFT_EXT, ext.NEGATIVE_ONE_TO_ONE_EXT );
+
+			}
+
+			currentReversed = reversed;
+
+			var oldDepth = currentDepthClear;
+			currentDepthClear = null;
+			this.setClear( oldDepth );
+
+		}
+
+	}
+
+	public function getReversed () {
+
+		return currentReversed;
+
+	}
+
+	public function setTest ( depthTest ) {
+
+		if ( depthTest ) {
+
+			enable( gl.DEPTH_TEST );
+
+		} else {
+
+			disable( gl.DEPTH_TEST );
+
+		}
+
+	}
+
+	public function setMask ( depthMask ) {
+
+		if ( currentDepthMask != depthMask && ! locked ) {
+
+			gl.depthMask( depthMask );
+			currentDepthMask = depthMask;
+
+		}
+
+	}
+
+	public function setFunc ( depthFunc ) {
+
+		if ( currentReversed ) depthFunc = reversedFuncs[ depthFunc ];
+
+		if ( currentDepthFunc != depthFunc ) {
+
+			switch ( depthFunc ) {
+
+				case NeverDepth:
+
+					gl.depthFunc( gl.NEVER );
+					break;
+
+				case AlwaysDepth:
+
+					gl.depthFunc( gl.ALWAYS );
+					break;
+
+				case LessDepth:
+
+					gl.depthFunc( gl.LESS );
+					break;
+
+				case LessEqualDepth:
+
+					gl.depthFunc( gl.LEQUAL );
+					break;
+
+				case EqualDepth:
+
+					gl.depthFunc( gl.EQUAL );
+					break;
+
+				case GreaterEqualDepth:
+
+					gl.depthFunc( gl.GEQUAL );
+					break;
+
+				case GreaterDepth:
+
+					gl.depthFunc( gl.GREATER );
+					break;
+
+				case NotEqualDepth:
+
+					gl.depthFunc( gl.NOTEQUAL );
+					break;
+
+				default:
+
+					gl.depthFunc( gl.LEQUAL );
+
+			}
+
+			currentDepthFunc = depthFunc;
+
+		}
+
+	}
+
+	public function setLocked ( lock ) {
+
+		locked = lock;
+
+	}
+
+	public function setClear ( depth ) {
+
+		if ( currentDepthClear != depth ) {
+
+			if ( currentReversed ) {
+
+				depth = 1 - depth;
+
+			}
+
+			gl.clearDepth( depth );
+			currentDepthClear = depth;
+
+		}
+
+	}
+
+	public function reset () {
+
+		locked = false;
+
+		currentDepthMask = null;
+		currentDepthFunc = null;
+		currentDepthClear = null;
+		currentReversed = false;
+
+	}
+
+}
+
+class StencilBuffer {
+	public function new() {}
+
+	var locked = false;
+
+	var currentStencilMask = null;
+	var currentStencilFunc = null;
+	var currentStencilRef = null;
+	var currentStencilFuncMask = null;
+	var currentStencilFail = null;
+	var currentStencilZFail = null;
+	var currentStencilZPass = null;
+	var currentStencilClear = null;
+
+	public function setTest ( stencilTest ) {
+
+		if ( ! locked ) {
+
+			if ( stencilTest ) {
+
+				enable( gl.STENCIL_TEST );
+
+			} else {
+
+				disable( gl.STENCIL_TEST );
+
+			}
+
+		}
+
+	}
+
+	public function setMask ( stencilMask ) {
+
+		if ( currentStencilMask != stencilMask && ! locked ) {
+
+			gl.stencilMask( stencilMask );
+			currentStencilMask = stencilMask;
+
+		}
+
+	}
+
+	public function setFunc ( stencilFunc, stencilRef, stencilMask ) {
+
+		if ( currentStencilFunc != stencilFunc ||
+				currentStencilRef != stencilRef ||
+				currentStencilFuncMask != stencilMask ) {
+
+			gl.stencilFunc( stencilFunc, stencilRef, stencilMask );
+
+			currentStencilFunc = stencilFunc;
+			currentStencilRef = stencilRef;
+			currentStencilFuncMask = stencilMask;
+
+		}
+
+	}
+
+	public function setOp ( stencilFail, stencilZFail, stencilZPass ) {
+
+		if ( currentStencilFail != stencilFail ||
+				currentStencilZFail != stencilZFail ||
+				currentStencilZPass != stencilZPass ) {
+
+			gl.stencilOp( stencilFail, stencilZFail, stencilZPass );
+
+			currentStencilFail = stencilFail;
+			currentStencilZFail = stencilZFail;
+			currentStencilZPass = stencilZPass;
+
+		}
+
+	}
+
+	public function setLocked ( lock ) {
+
+		locked = lock;
+
+	}
+
+	public function setClear ( stencil ) {
+
+		if ( currentStencilClear != stencil ) {
+
+			gl.clearStencil( stencil );
+			currentStencilClear = stencil;
+
+		}
+
+	}
+
+	public function reset () {
+
+		locked = false;
+
+		currentStencilMask = null;
+		currentStencilFunc = null;
+		currentStencilRef = null;
+		currentStencilFuncMask = null;
+		currentStencilFail = null;
+		currentStencilZFail = null;
+		currentStencilZPass = null;
+		currentStencilClear = null;
+
+	}
+
+}
+
 class WebGLState {
 	public function new() {
 		if ( glVersion.indexOf( 'WebGL' ) != - 1 ) {
@@ -52,343 +382,6 @@ class WebGLState {
         Constants.NotEqualDepth => Constants.EqualDepth,
         Constants.GreaterEqualDepth => Constants.LessEqualDepth,
     ];
-
-	function ColorBuffer() {
-
-		var locked = false;
-
-		var color = new Vector4();
-		var currentColorMask = null;
-		var currentColorClear = new Vector4( 0, 0, 0, 0 );
-
-		return {
-
-			setMask: function ( colorMask ) {
-
-				if ( currentColorMask != colorMask && ! locked ) {
-
-					gl.colorMask( colorMask, colorMask, colorMask, colorMask );
-					currentColorMask = colorMask;
-
-				}
-
-			},
-
-			setLocked: function ( lock ) {
-
-				locked = lock;
-
-			},
-
-			setClear: function ( r, g, b, a, premultipliedAlpha ) {
-
-				if ( premultipliedAlpha == true ) {
-
-					r *= a; g *= a; b *= a;
-
-				}
-
-				color.set( r, g, b, a );
-
-				if ( currentColorClear.equals( color ) == false ) {
-
-					gl.clearColor( r, g, b, a );
-					currentColorClear.copy( color );
-
-				}
-
-			},
-
-			reset: function () {
-
-				locked = false;
-
-				currentColorMask = null;
-				currentColorClear.set( - 1, 0, 0, 0 ); // set to invalid state
-
-			}
-
-		};
-
-	}
-
-	function DepthBuffer() {
-
-		var locked = false;
-
-		var currentReversed = false;
-		var currentDepthMask = null;
-		var currentDepthFunc = null;
-		var currentDepthClear = null;
-
-		return {
-
-			setReversed: function ( reversed ) {
-
-				if ( currentReversed != reversed ) {
-
-					var ext = extensions.get( 'EXT_clip_control' );
-
-					if ( reversed ) {
-
-						ext.clipControlEXT( ext.LOWER_LEFT_EXT, ext.ZERO_TO_ONE_EXT );
-
-					} else {
-
-						ext.clipControlEXT( ext.LOWER_LEFT_EXT, ext.NEGATIVE_ONE_TO_ONE_EXT );
-
-					}
-
-					currentReversed = reversed;
-
-					var oldDepth = currentDepthClear;
-					currentDepthClear = null;
-					this.setClear( oldDepth );
-
-				}
-
-			},
-
-			getReversed: function () {
-
-				return currentReversed;
-
-			},
-
-			setTest: function ( depthTest ) {
-
-				if ( depthTest ) {
-
-					enable( gl.DEPTH_TEST );
-
-				} else {
-
-					disable( gl.DEPTH_TEST );
-
-				}
-
-			},
-
-			setMask: function ( depthMask ) {
-
-				if ( currentDepthMask != depthMask && ! locked ) {
-
-					gl.depthMask( depthMask );
-					currentDepthMask = depthMask;
-
-				}
-
-			},
-
-			setFunc: function ( depthFunc ) {
-
-				if ( currentReversed ) depthFunc = reversedFuncs[ depthFunc ];
-
-				if ( currentDepthFunc != depthFunc ) {
-
-					switch ( depthFunc ) {
-
-						case NeverDepth:
-
-							gl.depthFunc( gl.NEVER );
-							break;
-
-						case AlwaysDepth:
-
-							gl.depthFunc( gl.ALWAYS );
-							break;
-
-						case LessDepth:
-
-							gl.depthFunc( gl.LESS );
-							break;
-
-						case LessEqualDepth:
-
-							gl.depthFunc( gl.LEQUAL );
-							break;
-
-						case EqualDepth:
-
-							gl.depthFunc( gl.EQUAL );
-							break;
-
-						case GreaterEqualDepth:
-
-							gl.depthFunc( gl.GEQUAL );
-							break;
-
-						case GreaterDepth:
-
-							gl.depthFunc( gl.GREATER );
-							break;
-
-						case NotEqualDepth:
-
-							gl.depthFunc( gl.NOTEQUAL );
-							break;
-
-						default:
-
-							gl.depthFunc( gl.LEQUAL );
-
-					}
-
-					currentDepthFunc = depthFunc;
-
-				}
-
-			},
-
-			setLocked: function ( lock ) {
-
-				locked = lock;
-
-			},
-
-			setClear: function ( depth ) {
-
-				if ( currentDepthClear != depth ) {
-
-					if ( currentReversed ) {
-
-						depth = 1 - depth;
-
-					}
-
-					gl.clearDepth( depth );
-					currentDepthClear = depth;
-
-				}
-
-			},
-
-			reset: function () {
-
-				locked = false;
-
-				currentDepthMask = null;
-				currentDepthFunc = null;
-				currentDepthClear = null;
-				currentReversed = false;
-
-			}
-
-		};
-
-	}
-
-	function StencilBuffer() {
-
-		var locked = false;
-
-		var currentStencilMask = null;
-		var currentStencilFunc = null;
-		var currentStencilRef = null;
-		var currentStencilFuncMask = null;
-		var currentStencilFail = null;
-		var currentStencilZFail = null;
-		var currentStencilZPass = null;
-		var currentStencilClear = null;
-
-		return {
-
-			setTest: function ( stencilTest ) {
-
-				if ( ! locked ) {
-
-					if ( stencilTest ) {
-
-						enable( gl.STENCIL_TEST );
-
-					} else {
-
-						disable( gl.STENCIL_TEST );
-
-					}
-
-				}
-
-			},
-
-			setMask: function ( stencilMask ) {
-
-				if ( currentStencilMask != stencilMask && ! locked ) {
-
-					gl.stencilMask( stencilMask );
-					currentStencilMask = stencilMask;
-
-				}
-
-			},
-
-			setFunc: function ( stencilFunc, stencilRef, stencilMask ) {
-
-				if ( currentStencilFunc != stencilFunc ||
-				     currentStencilRef != stencilRef ||
-				     currentStencilFuncMask != stencilMask ) {
-
-					gl.stencilFunc( stencilFunc, stencilRef, stencilMask );
-
-					currentStencilFunc = stencilFunc;
-					currentStencilRef = stencilRef;
-					currentStencilFuncMask = stencilMask;
-
-				}
-
-			},
-
-			setOp: function ( stencilFail, stencilZFail, stencilZPass ) {
-
-				if ( currentStencilFail != stencilFail ||
-				     currentStencilZFail != stencilZFail ||
-				     currentStencilZPass != stencilZPass ) {
-
-					gl.stencilOp( stencilFail, stencilZFail, stencilZPass );
-
-					currentStencilFail = stencilFail;
-					currentStencilZFail = stencilZFail;
-					currentStencilZPass = stencilZPass;
-
-				}
-
-			},
-
-			setLocked: function ( lock ) {
-
-				locked = lock;
-
-			},
-
-			setClear: function ( stencil ) {
-
-				if ( currentStencilClear != stencil ) {
-
-					gl.clearStencil( stencil );
-					currentStencilClear = stencil;
-
-				}
-
-			},
-
-			reset: function () {
-
-				locked = false;
-
-				currentStencilMask = null;
-				currentStencilFunc = null;
-				currentStencilRef = null;
-				currentStencilFuncMask = null;
-				currentStencilFail = null;
-				currentStencilZFail = null;
-				currentStencilZPass = null;
-				currentStencilClear = null;
-
-			}
-
-		};
-
-	}
 
 	//
 

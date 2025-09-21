@@ -1,10 +1,13 @@
 package vman2002.vthreehx.renderers.shaders;
 
+import StringTools;
+import haxe.macro.Context;
+import haxe.macro.Expr.Field;
+import haxe.macro.Expr;
+import sys.FileSystem;
+import sys.io.File;
 import vman2002.vthreehx.renderers.shaders.ShaderChunk;
 import vman2002.vthreehx.renderers.shaders.ShaderLib;
-import sys.io.File;
-import sys.FileSystem;
-import StringTools;
 
 @:allow(ShaderChunk)
 @:allow(ShaderLib)

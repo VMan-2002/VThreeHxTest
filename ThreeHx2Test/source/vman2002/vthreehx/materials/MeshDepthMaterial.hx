@@ -1,6 +1,6 @@
 package vman2002.vthreehx.materials;
 
-import vman2002.vthreehx.Constants.MeshDepthPacking;
+import vman2002.vthreehx.Constants.BasicDepthPacking;
 import vman2002.vthreehx.materials.Material;
 
 /**

@@ -211,15 +211,24 @@ abstract CommonArray(Float32Array) from Float32Array from Float16Array to Float3
     
 }*/
 
-class CustomIterator extends IntIterator {
+class CustomIterator {
     public var step:Int;
+    public var min:Int;
+    public var max:Int;
 
     public function new(min:Int, max:Int, ?step:Int = 1) {
-        super(min, max);
+        this.min = min;
+        this.max = max;
         this.step = step;
     }
 
-    public override function next() {
+    public function next() {
         min += step;
     }
+
+    public function hasNext() {
+        return min < max;
+    }
 }
+
+typedef Uniforms = Map<String, Dynamic>;

@@ -1,5 +1,6 @@
 package vman2002.vthreehx.math;
 
+import vman2002.vthreehx.core.BufferAttribute;
 import vman2002.vthreehx.math.MathUtils.clamp in clamp;
 import vman2002.vthreehx.math.MathUtils.euclideanModulo in euclideanModulo;
 import vman2002.vthreehx.math.MathUtils;
@@ -729,7 +730,7 @@ class Color {
 	 * @param {Matrix3} m - The matrix.
 	 * @return {Color} A reference to this color.
 	 */
-	public function applyMatrix3( m ) {
+	public function applyMatrix3( m:Matrix3 ) {
 		var r = this.r, g = this.g, b = this.b;
 		var e = m.elements;
 
@@ -746,7 +747,7 @@ class Color {
 	 * @param {Color} c - The color to test for equality.
 	 * @return {boolean} Whether this bounding color is equal with the given one.
 	 */
-	public function equals( c ) {
+	public function equals( c:Color ) {
 		return ( c.r == this.r ) && ( c.g == this.g ) && ( c.b == this.b );
 	}
 
@@ -757,7 +758,7 @@ class Color {
 	 * @param {number} [offset=0] - The offset into the array.
 	 * @return {Color} A reference to this color.
 	 */
-	public function fromArray( array, offset = 0 ) {
+	public function fromArray( array:Array<Float>, offset = 0 ) {
 		this.r = array[ offset ];
 		this.g = array[ offset + 1 ];
 		this.b = array[ offset + 2 ];
@@ -790,7 +791,7 @@ class Color {
 	 * @param {number} index - The index into the attribute.
 	 * @return {Color} A reference to this color.
 	 */
-	public function fromBufferAttribute( attribute, index ) {
+	public function fromBufferAttribute<T>( attribute:BufferAttribute<T>, index:Int) {
 		this.r = attribute.getX( index );
 		this.g = attribute.getY( index );
 		this.b = attribute.getZ( index );
