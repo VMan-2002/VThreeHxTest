@@ -28,7 +28,7 @@ class ShaderSetBuilder {
 
                 fields.push({
                     pos: Context.currentPos(),
-                    name: thing,
+                    name: thing.substr(0, thing.indexOf(".")),
                     meta: null,
                     kind: FieldType.FVar(macro:String, macro $a{v}),
                     doc: null,
